@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{amstext}
+\usepackage{graphicx}
+
+
+\usepackage{hyperref}
+\hypersetup{
+    bookmarksopen=false,
+    bookmarksnumbered=true,
+    bookmarksopenlevel=2
+}
+\usepackage[greek,english]{babel}
+%-----------------------------------------------------------------------------------------------------------------------------
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{exe}{Exercise}
+\newtheorem{cor}[thm]{Corolario}
+\newtheorem{lem}[thm]{Lema}
+\newtheorem{prop}[thm]{Proposici—n}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definici—n}
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Observaci—n}
+\theoremstyle{definition}
+\newtheorem{ejm}[thm]{Ejemplo}
+\numberwithin{equation}{section}
+
+
+% MATH -----------------------------------------------------------
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Int}{\mathbb{Z}}
+\newcommand{\Field}{\mathbb {F}}
+\newcommand{\Mat}{\mathrm{Mat}}
+\newcommand{\Img}{\mathrm{Im}\:}
+\newcommand{\Var}{\mathrm{Var}\:}
+\newcommand{\diam}{\mathrm{diam}\:}
+\newcommand{\inte}{\mathrm{int}\:}
+\newcommand{\dist}{\mathrm{dist}\:}
+\newcommand{\Cov}{\mathrm{Cov}\:}
+\newcommand{\Rea}{\mathrm{Re}\:}
+\newcommand{\tr}{\mathrm{tr}\:}
+\newcommand{\Alg}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Mo}{M}
+\newcommand{\Mod}{N}
+\newcommand{\Id}{\mathcal {I}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\Max}{\mathcal {M}}
+\newcommand{\Nat}{\mathbb {N}}
+\newcommand{\Rat}{\mathbb {Q}}
+\newcommand{\sub}{\subset}
+\newcommand{\GL}[1]{\mathrm{GL}(#1)}
+\newcommand{\SL}[1]{\mathrm{SL}(#1)}
+\newcommand{\End}[1]{\mathrm{End}(#1)}
+\newcommand{\Der}[1]{\mathrm{Der}(#1)}
+\newcommand{\Hom}[2]{\mathrm{Hom}({#1},{#2})}
+\newcommand{\HomM}[2]{\mathrm{Hom}_\Alg({#1},{#2})}
+\newcommand{\Homl}[2]{\mathbf{Hom}({#1},{#2})}
+\newcommand{\HomMl}[2]{\mathbf{Hom}_\Alg({#1},{#2})}
+\newcommand{\Ber}{\mathrm{Ber}}
+\newcommand{\Lie}{\mathrm{Lie}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\BX}{\mathbf{B}(X)}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\M}{M}
+\newcommand{\SM}{\mathcal{M}}
+\newcommand{\N}{N}
+\newcommand{\SN}{\mathcal{N}}
+\newcommand{\Gav}{\mathcal{O}}
+\newcommand{\Gavi}{\mathcal{P}}
+\newcommand{\J}{\mathcal{J}}
+\newcommand{\G}{G}
+\newcommand{\SMan}{\mathbf{SMan}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Grp}{\mathbf{Grp}}
+\newcommand{\g}{\gamma}
+\newcommand{\p}{\lambda}
+\newcommand{\Li}{\mathcal{L}}
+\newcommand{\Com}[2]{\biggl(
+\begin{matrix}
+#1\\
+#2
+\end{matrix}
+\biggr)}
+
+\newcommand{\Fun}{\mathbf{F}}
+\newcommand{\1}{1}
+\newcommand{\gl}{\frak{gl}}
+
+%-----------------------------------------------------------------
+\numberwithin{thm}{section} \numberwithin{equation}{section}
+% ----------------------------------------------------------------
+
+% ----------------------------------------------------------------
+\begin{document}
+\title{\textbf{Girsanov Theorem}}
+\author{Jose Alcala}
+\date{April 2010}
+% ----------------------------------------------------------------
+\maketitle{}
+
+\section{Derivation}
+Assume $P$ is the measure on paths given by the solution of the SDE 
+$$
+dX=b\:dt + \sigma \: dW\:,
+$$
+and $Q$ the measure on paths given by the solution of the SDE $dX=\sigma \: dW$. We want to know if the measures are absolutely continuous and what is the Radon-Nikodym derivative $dP/dQ$. When the measures are absolutely continuous with respect to each other, there is $g\in \F_t$ with $g>0$ such that for all $f\in \F_t$ we have
+\begin{equation}\label{Radon}
+E_{Q}[g f ]=E_{P}[f]\:.
+\end{equation}
+Our task is to find an explicit expression for $g$. Using that $g>0$, we can write $g = e^{L}$ and look for the SDE that $L$ satisfies. For $f=f(X)$ we obtain using the Ito formula under $Q$
+\begin{equation}\label{Ito}
+	\begin{split}
+	d(g\:f)&=e^L \: f\: dL+e^L f_x dX + \frac{1}{2} e^L \: f \: dL\:dL+\frac{1}{2} e^L dX^t \:f_{xx} \: dX+e^L dL f_x \: dX\\
+&=e^L \: f\: dL+\frac{1}{2} e^L \: f \: dL\:dL+\frac{1}{2} e^L \tr(\sigma^t \:f_{xx} \: \sigma) dt + e^L\:dL\:f_x\:\sigma\:dW+ \text{ Q-noise}.
+	\end{split}
+\end{equation}
+Similarly, under $P$ we have
+$$
+df= f_x\:b\: dt+\frac{1}{2} \tr(\sigma^t \:f_{xx} \: \sigma) dt + \text{ P-noise}\:.
+$$
+Taking $f$ a constant function in \eqref{Radon} and \eqref{Ito} gives
+\begin{equation}
+	\begin{split}
+	dL+\frac{1}{2}\:dL \: dL = \text{Q-noise}\:,
+	\end{split}
+\end{equation}
+and taking $f$ linear we obtain
+\begin{equation}
+	\begin{split}
+	dL\: \sigma\:dW+\text{Q-noise}=b \: dt +\text{P-noise}\:.
+	\end{split}
+\end{equation}
+We write the SDE $dL=r\: dt + A \: dX$. Solving for $A$ and $r$ in the last two equations gives $A=b^t (\sigma \: \sigma^t)^{-1}$ and $r=-\frac{1}{2}\:b^t\:(\sigma \: \sigma^t )^{-1} b$\:.
+
+\end{document}
+
+
