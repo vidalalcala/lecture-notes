@@ -1,0 +1,277 @@
+\documentclass[10pt]{article}
+%\documentclass[letter,10pt]{article}
+\usepackage{fullpage}
+% \usepackage{fullpage}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{verbatim} % for comments
+%\usepackage[notcite,notref]{showkeys} % shows all labels on the side
+\usepackage{hyperref}
+
+%The cool package for derivatives.
+\usepackage{cool}
+\Style{DSymb={\mathrm d},DShorten=true,IntegrateDifferentialDSymb=\mathrm{d}}
+
+
+\numberwithin{equation}{section}
+
+\include{definitionsVol}
+
+
+
+%\newcommand{\footnotedva}[1]{\footnote{#1}} % comment this to hide the footnotes
+\newcommand{\footnotedva}[1]{}
+
+\DeclareMathOperator*{\argmin}{argmin\,}
+
+\newtheorem{theorem}{Theorem}%[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+%\theoremstyle{remark}
+\newtheorem*{remark*}{Remark}
+\newtheorem{remark}[lemma]{Remark}
+
+%%%%%%% hack for aligning enumerate with labels
+\newenvironment{changemargin}[2]{%
+  \begin{list}{}{%
+    \setlength{\topsep}{0pt}%
+    \setlength{\leftmargin}{#1}%
+    \setlength{\rightmargin}{#2}%
+    \setlength{\listparindent}{\parindent}%
+    \setlength{\itemindent}{\parindent}%
+    \setlength{\parsep}{\parskip}%
+  }%
+  \item[]}{\end{list}}
+  
+%opening
+\begin{document}
+
+\title{Stochastic Volatility}
+\author{Jose V. Alcala-Burgos \\
+ITESO\\
+josealcala@iteso.mx}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Hedging in continuous time}
+A \emph{hedging strategy} for an instrument with value $V$ is a portfolio $\Pi$ composed as follows.
+\begin{itemize}
+\item A short position on the instrument $V$.
+\item $x_i$ shares of the instrument $S_i$.
+\item $y$ shares of a risk free bond with value $A$.
+\end{itemize}
+The portfolio value satisfies
+\begin{equation}
+	\begin{split}
+	\Pi &= \sum_{i} x_i S_i + y A - V\:,\qquad t\geq0,
+	\end{split}
+\end{equation}
+and the initial condition
+\begin{equation*}
+	\begin{split}
+	\Pi &= 0,\qquad t=0\:.	
+	\end{split}
+\end{equation*}
+The objective is to find $x_i$ and $y$ such that the portfolio is \emph{self-financing}; that is,
+\begin{equation}\label{self}
+	\begin{split}
+	\sum_{i} x_i dS_i+y dA-dV&=\sum_{i} dx_i S_i +dy A\:,\qquad t\geq 0
+	\end{split}
+\end{equation}
+and the portfolio value does not change; that is,
+\begin{equation}\label{constant}
+	\begin{split}
+	d\Pi = 0,\qquad t\geq 0\:.
+	\end{split}
+\end{equation}
+We need models for $dS_i$ and $dV$ in order to decide if the previous equations hold.
+
+In the Black Scholes model we assume that
+\begin{equation}\label{dS}
+	\begin{split}
+		dS &= \mu S dt +\sigma S dW\:,
+	\end{split}
+\end{equation}
+and use the \emph{no arbitrage} hypothesis to derive the value of $V$ and $dV$. Namely, $V$ must be a function of $S$ and $t$; that is, $V = V(S,t)$. A portfolio $R$ with $x$ shares of $S$ and $y$ shares of $A$ is \emph{replicating} if and only if $\Pi=R-V$ is a hedging strategy. It follows that equations \eqref{self} and \eqref{constant} hold. We calculate, using Ito's formula,
+\begin{equation}\label{dV}
+	\begin{split}
+	dV&= \biggl(V_t+\mu S V_S +\frac{1}{2} \sigma^2 S^2 V_{SS}\biggr)dt+\biggl(\sigma S V_S \biggr)dW\:,
+	\end{split}
+\end{equation}
+and
+\begin{equation}\label{dPi_1}
+	\begin{split}
+	d\Pi = x dS +y dA -dV + dx S+dy A\:.
+	\end{split}
+\end{equation}
+Now substitute \eqref{self} and \eqref{dV} in \eqref{dPi_1}.
+\begin{equation}\label{dPi_2}
+	\begin{split}
+	d\Pi &= 2 \biggl( x \mu S - \mu S V_S -V_t -\frac{1}{2} \sigma^2 S^2 V_{SS}+ r (V-xS) \biggr)dt\\
+	&+ 2\biggl( x \sigma S - \sigma S V_S \biggr) dW\:.
+	\end{split}
+\end{equation}
+In order to make both terms in equation \eqref{dPi_2} equal to zero we must pick $x = V_S$ and $V$ will be the solution of the Black-Scholes equation
+\begin{equation}\label{BS}
+	\begin{split}
+	V_t + r S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS}-rV&=0\:.
+	\end{split}
+\end{equation}
+In the case of a European call option with strike price $K$ we obtain the Black-Scholes formula,
+\begin{equation*}
+	\begin{split}
+	V = S N(d_1)-e^{-r(T-t)}K N(d_2)\:,
+	\end{split}
+\end{equation*}
+with
+\begin{equation*}
+	\begin{split}
+	d_1 &= \frac{\ln(S/K)+\bigl(r+\frac{1}{2} \sigma^2\bigr)(T-t)}{\sigma \sqrt{T-t}}\\
+	d_2 &= d_1 - \sigma \sqrt{T-t}\:.
+	\end{split}
+\end{equation*}
+These equations can be rewritten in terms of the \emph{forward price} $F(t,T)$ as
+\begin{equation}
+	\begin{split}
+	V &= e^{-r(T-t)}(e^{r(T-t)}S N(d_1) - K N(d_2))\\
+	   &= e^{-r(T-t)}(F(t,T) N(d_1) - K N(d_2))\:,
+	\end{split}
+\end{equation}
+and
+\begin{equation}
+	\begin{split}
+	d_1 &= \frac{\ln(e^{r(T-t)}S/K)+\frac{1}{2} \sigma^2(T-t)}{\sigma \sqrt{T-t}}\\
+	d_1 &= \frac{\ln(F(t,T)/K)+\frac{1}{2} \sigma^2(T-t)}{\sigma \sqrt{T-t}}\\
+	d_2 &= d_1 - \sigma \sqrt{T-t}\:.
+	\end{split}
+\end{equation}
+The formulae in terms of the forward price is known as \emph{Black's formula}.
+
+\section{The SABR stochastic volatility model ($\beta=1$)}
+A stochastic volatility models has an extra source of randomness that impacts the stock price volatility. The SABR model for the stock price is defined by equation \eqref{dS} and the additional equation for the annualized volatility
+\begin{equation}\label{dsigma}
+	\begin{split}
+	d\sigma = \nu \sigma dZ \:,
+	\end{split}
+\end{equation}
+where $Z$ is a Brownian motion such that $dWdZ=\rho dt$. This approach has two crucial properties:
+\begin{enumerate}
+\item The option price $V$ is now a function of $S,\sigma$ and $t$.
+\item We need more than one risky asset in the hedging strategy. The usual choice is a \emph{liquid} option on the same underlying with value $U=U(S,\sigma,t)$ and the equation for the hedging portfolio, after we add $z$ units of $U$, is
+\begin{equation*}
+	\begin{split}
+	\Pi = x S + z U + y A - V\:.
+	\end{split}
+\end{equation*}
+\end{enumerate}
+
+We can write down an equation for the dynamics of $\Pi$ using Ito's lemma:\begin{equation}\label{dV_vol}
+	\begin{split}
+	dV&= \biggl(V_t+\mu S V_S +\frac{1}{2} \sigma^2 S^2 V_{SS} + \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}+\rho \sigma^2 \nu S V_{S\sigma} \biggr)dt + \sigma S V_S dW + \nu \sigma V_{\sigma} dZ\:,
+	\end{split}
+\end{equation}
+\begin{equation}\label{dU_vol}
+	\begin{split}
+	dU&= \biggl(U_t+\mu S U_S +\frac{1}{2} \sigma^2 S^2 U_{SS} + \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma} + \rho \sigma^2 \nu S U_{S\sigma}\biggr)dt + \sigma S U_S dW +\nu \sigma U_{\sigma} dZ\:,
+	\end{split}
+\end{equation}
+and
+\begin{equation}\label{dPi_1_vol}
+	\begin{split}
+	d\Pi = x dS + z dU +y dA -dV + dx S  + dz U + dy A\:.
+	\end{split}
+\end{equation}
+Now substitute \eqref{self}, \eqref{dV_vol}, and \eqref{dU_vol} in \eqref{dPi_1_vol}.
+\begin{equation}\label{dPi_2_vol}
+	\begin{split}
+	d\Pi &= 2 \biggl( x \mu S + z \biggl[U_t +  \mu S U_{S} + \frac{1}{2} \sigma^2 S^2 U_{SS} + \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma} + \rho \sigma^2 \nu S U_{S\sigma}\biggr] \\
+	&  - \biggl[ V_t  + \mu S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS} + \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma} + \rho \sigma^2 \nu S V_{S\sigma} \biggr] \\
+	& + r (V-xS-zU) \biggr)dt\\
+	& + 2\biggl( x \sigma S + z \sigma S U_{S}  - \sigma S V_S \biggr) dW  + 2 \biggl( z \nu \sigma U_{\sigma} - \nu \sigma V_{\sigma} \biggr) dZ\:.
+	\end{split}
+\end{equation}
+The only way the third term in equation \eqref{dPi_2_vol} vanishes is with the choice
+\begin{equation}
+	\begin{split}
+	z =& \frac{V_{\sigma}}{U_{\sigma}}\:;
+	\end{split}
+\end{equation}
+thus, we can not hedge the option $V$ with only the underlying $S$. In order to make the last two terms in equation \eqref{dPi_2} equal to zero we must choose
+\begin{equation*}
+	\begin{split}
+		x &= V_S - z U_S \:.
+	\end{split}
+\end{equation*}
+With this choice of $x$ and $z$ we obtain
+\begin{equation*}
+	\begin{split}
+	d\Pi &= 2 \biggl(\frac{V_{\sigma}}{U_{\sigma}}\biggl[U_t + r S U_S + \frac{1}{2} \sigma^2 S^2 U_{SS}+ \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma}  + \rho \sigma^2 \nu S U_{S\sigma} - r U\biggr] \\
+	& -\biggl[ V_t + r S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS} + \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma} + \rho \sigma^2 \nu S V_{S\sigma} - r V \biggr] \biggr)dt\:.
+	\end{split}
+\end{equation*}
+The RHS of the last equation vanishes iff there is a function $\phi(S,\sigma,t)$ such that
+\begin{equation*}
+	\begin{split}
+	U_t + r S U_S + \frac{1}{2} \sigma^2 S^2 U_{SS}+ \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma}  + \rho \sigma^2 \nu S U_{S\sigma} - r U&=\phi U_{\sigma}\\
+	V_t + r S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V &=\phi V_{\sigma}\:.
+	\end{split}
+\end{equation*}
+The function $\phi$ is written in terms of the \emph{market price of risk} $\lambda$ as
+\begin{equation*}
+	\begin{split}
+	\phi = \lambda \nu \sigma\:.
+	\end{split}
+\end{equation*}
+and the final PDE for $V$ (and $U$) becomes
+\begin{equation*}
+	\begin{split}
+	V_t + r S V_S - \lambda \nu \sigma V_{\sigma}+ \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V&=0\\
+	\end{split}
+\end{equation*}
+This is the same PDE satisfied by
+\begin{equation*}
+	\begin{split}
+	V(S,\sigma,t) = E_{S,\sigma,t} [e^{-r(T-t)} f(S_T,\sigma_T,T)] \:,
+	\end{split}
+\end{equation*}
+assuming the \emph{risk neutral dynamics} for the variables $S$ and $\sigma$:
+\begin{equation}\label{RN}
+	\begin{split}
+		dS &= r S dt +\sigma S dW^{*}\\
+		d\sigma &= - \lambda \nu \sigma  dt + \nu\sigma dZ^{*}\:. 
+	\end{split}
+\end{equation}
+Finally, we can write down equations in terms in terms of the \emph{forward variables}
+\begin{equation*}
+	\begin{split}
+	 \widehat{F} &= e^{r(T-t)} S \\
+	 \widehat{\sigma} &= e^{- \lambda \nu (T-t) } \sigma\:. 
+	\end{split}
+\end{equation*}
+The result is
+\begin{equation*}
+	\begin{split}
+		d\widehat{F} &= \sigma \widehat{F} dW^{*}\\
+		d \widehat{\sigma }&= \nu \widehat{\sigma} dZ^{*}\:.
+	\end{split}
+\end{equation*}
+and the PDE in the forward variables is
+\begin{equation*}
+	\begin{split}
+	V_t + \frac{1}{2} \sigma^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu F V_{F\sigma} - r V&=0\\
+	\end{split}
+\end{equation*}
+
+\bibliographystyle{plain}	% (uses file "plain.bst")
+\bibliography{calibration}
+\end{document}  

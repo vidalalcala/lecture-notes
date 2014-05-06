@@ -1,0 +1,387 @@
+%%
+%% Place here your \usepackage's. Some recommended packages are already included.
+%%
+
+% Graphics:
+%\usepackage[final]{graphicx}
+%\usepackage{graphicx} % use this line instead of the above to suppress graphics in draft copies
+%\usepackage{graphpap} % \defines the \graphpaper command
+
+% Indent first line of each section:
+%\usepackage{indentfirst}
+
+% Good AMS stuff:
+%\usepackage{amsthm} % facilities for theorem-like environments
+%\usepackage[tbtags]{amsmath} % a lot of good stuff!
+
+% Fonts and symbols:
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+
+% Formatting tools:
+%\usepackage{relsize} % relative font size selection, provides commands \textsmalle, \textlarger
+%\usepackage{xspace} % gentle spacing in macros, such as \newcommand{\acims}{\textsc{acim}s\xspace}
+
+% Page formatting utility:
+%\usepackage{geometry}
+
+%%
+%% Place here your \newcommand's and \renewcommand's. Some examples already included.
+%%
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\emptyset}{\ensuremath{\varnothing}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\T}{\ensuremath{\mathbb{T}}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\closure}[1]{\ensuremath{\overline{#1}}}
+
+%MINE
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\epsi}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\BX}{\mathbf{B}(X)}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\Par}{\mathcal{P}}
+\newcommand{\La}{\mathcal{L}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Hld}{\mathcal{H}}
+\newcommand{\Dst}{\mathcal{D}}
+
+%LINEAR ALGEBRA
+\newcommand{\tr}{\mathrm{tr}}
+
+%PROBABILITY
+\newcommand{\Var}{\mathrm{Var}\:}
+\newcommand{\dis}{\mathrm{d}}
+\newcommand{\iF}{\mathcal{F}}
+
+
+%\newcommand{\acim}{\textsc{acim}\xspace}
+%\newcommand{\acims}{\textsc{acim}s\xspace}
+
+%%
+%% Place here your \newtheorem's:
+%%
+
+%% Some examples commented out below. Create your own or use these...
+%%%%%%%%%\swapnumbers % this makes the numbers appear before the statement name.
+%\theoremstyle{plain}
+%\newtheorem{thm}{Theorem}[chapter]
+%\newtheorem{prop}[thm]{Proposition}
+%\newtheorem{lemma}[thm]{Lemma}
+%\newtheorem{cor}[thm]{Corollary}
+
+%\theoremstyle{definition}
+%\newtheorem{define}{Definition}[chapter]
+%
+%\theoremstyle{remark}
+%\newtheorem*{rmk*}{Remark}
+%\newtheorem*{rmks*}{Remarks}
+%
+%%% This defines the "proo" environment, which is the same as proof, but
+%%% with "Proof:" instead of "Proof.". I prefer the former.
+%\newenvironment{proo}{\begin{proof}[Proof:]}{\end{proof}}
+\def\theequation{\thesection.\arabic{equation}}
+\def\be{\begin{eqnarray}}
+\def\ee{\end{eqnarray}}
+
+\def\b*{\begin{eqnarray*}}
+\def\e*{\end{eqnarray*}}
+
+%
+% Theorem/proposition/etc.
+%
+%%%%%%%%% numerotation %%%%%%%
+\newtheorem{Theorem}{Theorem}[section]
+\newtheorem{Definition}[Theorem]{Definition}
+\newtheorem{Proposition}[Theorem]{Proposition}
+\newtheorem{Property}[Theorem]{Property}
+\newtheorem{Assumption}[Theorem]{Assumption}
+\newtheorem{Lemma}[Theorem]{Lemma}
+\newtheorem{Corollary}[Theorem]{Corollary}
+\newtheorem{Remark}[Theorem]{Remark}
+\newtheorem{Example}[Theorem]{Example}
+% \newtheorem{Proof}{Proof}
+% \newtheorem{Introduction}{Introduction}
+
+\makeatletter \@addtoreset{equation}{section}
+\def\theequation{\thesection.\arabic{equation}}
+% \@addtoreset{Definition}{section}
+% \def\theDefinition{\thesection.\arabic{Definition}}
+% \@addtoreset{Theorem}{section}
+% \def\theTheorem{\thesection.\arabic{Theorem}}
+% \@addtoreset{Proposition}{section}
+% \renewcommand{\theProposition}{\thesection.\arabic{Proposition}}
+% \@addtoreset{Property}{section}
+% \renewcommand{\theProperty}{\thesection.\arabic{Property}}
+% \@addtoreset{Assumption}{section}
+% \renewcommand{\theAssumption}{\thesection.\arabic{Assumption}}
+% \@addtoreset{Corollary}{section}
+% \renewcommand{\theCorollary}{\thesection.\arabic{Corollary}}
+% \@addtoreset{Lemma}{section}
+% \renewcommand{\theLemma}{\thesection.\arabic{Lemma}}
+% \@addtoreset{Remark}{section}
+% \renewcommand{\theRemark}{\thesection.\arabic{Remark}}
+% \@addtoreset{Example}{section}
+% \renewcommand{\theExample}{\thesection.\arabic{Example}}
+%
+% proof environment
+%
+
+%\newcommand{\ang}[1]{\left[#1\right]^\#}  % angular brackets for projection
+%\newcommand{\brak}[1]{\left(#1\right)}    % round brackets
+%\newcommand{\crl}[1]{\left\{#1\right\}}   % curly brackets
+%\newcommand{\edg}[1]{\left[#1\right]}     % edgy brackets
+
+
+\newcommand{\var}[1]{{\rm Var}\left(#1\right)}
+\newcommand{\cov}[2]{{\rm Cov}\left(#1,#2\right)}
+\newcommand{\No}[1]{\left\|#1\right\|}     % Norm
+
+%%%%%%%%% tabulation %%%%%%%%%%%%%
+
+%\addtolength{\oddsidemargin}{-0.1 \textwidth}
+%\addtolength{\textwidth}{0.2 \textwidth}
+%\addtolength{\topmargin}{-0.2 \textheight}
+%\addtolength{\textheight}{0.5 \textheight}
+%\addtolength{\parindent}{-0.02   \textwidth}
+%\renewcommand{\baselinestretch}{1.1}
+
+%%%% mathbb%%%%%%%%%%
+
+\def \E{\mathbb{E}}
+\def \F{\mathbb{F}}
+\def \H{\mathbb{H}}
+\def \L{\mathbb{L}}
+\def \M{\mathbb{M}}
+\def \N{\mathbb{N}}
+\def \P{\mathbb{P}}
+\def \Q{\mathbb{Q}}
+\def \R{\mathbb{R}}
+\def \S{\mathbb{S}}
+\def \Z{\mathbb{Z}}
+
+%%% cali %%%%
+
+\def\Ac{\mathcal{A}}
+\def\Bc{\mathcal{B}}
+\def\Cc{\mathcal{C}}
+\def\Dc{\mathcal{D}}
+\def\Ec{\mathcal{E}}
+\def\Fc{\mathcal{F}}
+\def\Gc{\mathcal{G}}
+\def\Hc{\mathcal{H}}
+\def\Ic{\mathcal{I}}
+\def\Jc{\mathcal{J}}
+\def\Kc{\mathcal{K}}
+\def\Lc{\mathcal{L}}
+\def\Mc{\mathcal{M}}
+\def\Nc{\mathcal{N}}
+\def\Oc{\mathcal{O}}
+\def\Pc{\mathcal{P}}
+\def\Qc{\mathcal{Q}}
+\def\Rc{\mathcal{R}}
+\def\Sc{\mathcal{S}}
+\def\Tc{\mathcal{T}}
+\def\Uc{\mathcal{U}}
+\def\Vc{\mathcal{V}}
+\def\Wc{\mathcal{W}}
+\def\Xc{\mathcal{X}}
+\def\Yc{\mathcal{Y}}
+\def\Zc{\mathcal{Z}}
+
+%%% bar %%%%
+
+\def\Ab{{\bar A}}
+\def\Bb{{\bar B}}
+\def\Cb{{\bar C}}
+\def\Db{{\bar D}}
+\def\Eb{{\bar E}}
+\def\Fb{{\overline{F}}}
+\def\Gb{{\bar G}}
+\def\Hb{{\bar H}}
+\def\Ib{{\bar I}}
+\def\Jb{{\bar J}}
+\def\Kb{{\bar K}}
+\def\Lb{{\bar L}}
+\def\Mb{{\bar M}}
+\def\Nb{{\bar N}}
+\def\Ob{{\bar O}}
+\def\Pb{{\bar P}}
+\def\Qb{{\bar Q}}
+\def\Rb{{\bar R}}
+\def\Sb{{\bar S}}
+\def\Tb{{\bar T}}
+\def\Ub{{\bar U}}
+\def\Vb{{\bar V}}
+\def\Wb{{\bar W}}
+\def\Xb{{\bar X}}
+\def\Yb{{\bar Y}}
+\def\Zb{{\bar Z}}
+\def\vo{\overline{v}}
+%%% hat %%%%
+
+\def\Ah{{\hat A}}
+\def\Bh{{\hat B}}
+\def\Ch{{\hat C}}
+\def\Dh{{\hat D}}
+\def\Eh{{\hat E}}
+\def\Fh{{\hat F}}
+\def\Gh{{\hat G}}
+\def\Hh{{\hat H}}
+\def\Ih{{\hat I}}
+\def\Jh{{\hat J}}
+\def\Kh{{\hat K}}
+\def\Lh{{\hat L}}
+\def\Mh{{\hat M}}
+\def\Nh{{\hat N}}
+\def\Oh{{\hat O}}
+\def\Ph{{\hat P}}
+\def\Qh{{\hat Q}}
+\def\Rh{{\hat R}}
+\def\Sh{{\hat S}}
+\def\Th{{\hat T}}
+\def\Uh{{\hat U}}
+\def\Vh{{\hat V}}
+\def\Wh{{\hat W}}
+\def\Xh{{\hat X}}
+\def\Yh{{\hat Y}}
+\def\Zh{{\hat Z}}
+
+%%% tilde %%%%
+
+\def\At{{\tilde A}}
+\def\Bt{{\tilde B}}
+\def\Ct{{\tilde C}}
+\def\Dt{{\tilde D}}
+\def\Et{{\tilde E}}
+\def\Ft{{\tilde F}}
+\def\Gt{{\tilde G}}
+\def\Ht{{\tilde H}}
+\def\It{{\tilde I}}
+\def\Jt{{\tilde J}}
+\def\Kt{{\tilde K}}
+\def\Lt{{\tilde L}}
+\def\Mt{{\tilde M}}
+\def\Nt{{\tilde N}}
+\def\Ot{{\tilde O}}
+\def\Pt{{\tilde P}}
+\def\Qt{{\tilde Q}}
+\def\Rt{{\tilde R}}
+\def\St{{\tilde S}}
+\def\Tt{{\tilde T}}
+\def\Ut{{\tilde U}}
+\def\Vt{{\tilde V}}
+\def\Wt{{\tilde W}}
+\def\Xt{{\tilde X}}
+\def\Yt{{\tilde Y}}
+\def\Zt{{\tilde Z}}
+
+
+%%% gras %%%%
+
+\def\HH{\mathbf{H}}
+\def\FF{\mathbf{F}}
+\def\LL{\mathbf{L}}
+\def\TT{\mathbf{T}}
+
+
+%%%% operateurs math %%%
+
+\def\normep#1{\left|{#1}\right|_p}
+%\def\E#1{E\left[{#1}\right]}
+\def\Tr#1{{\rm Tr}\left[#1\right]}
+
+\def \Sum{\displaystyle\sum}
+\def \Prod{\displaystyle\prod}
+\def \Int{\displaystyle\int}
+\def \Frac{\displaystyle\frac}
+\def \Inf{\displaystyle\inf}
+\def \Sup{\displaystyle\sup}
+\def \Lim{\displaystyle\lim}
+\def \Liminf{\displaystyle\liminf}
+\def \Limsup{\displaystyle\limsup}
+\def \Max{\displaystyle\max}
+\def \Min{\displaystyle\min}
+
+\def\einf{{\rm ess \, inf}}
+\def\esup{{\rm ess \, sup}}
+\def\trace{{\rm Tr}}
+
+%%%% texte dans formule %%%%%%%%%
+
+\def\d#1{\mbox{\rm diag}\left[#1\right]}
+\def\Pas{P-\mbox{a.s.}}
+\def\And{\;\mbox{ and }\;}
+\def\pourtout{\mbox{ for all }}
+
+%%%%%% raccourci commandes %%%
+
+\def\no{\noindent}
+\def\x{\times}
+
+\def\={\;=\;}
+\def\.{\;.}
+
+\def\vp{\varphi}
+\def\eps{\varepsilon}
+
+\def\reff#1{{\rm(\ref{#1})}}
+
+%%%%%%% characteres
+
+\def \i{1\!\mbox{\rm I}}
+\def\1{\mathds{1}}
+
+\def \ep{\hbox{ }\hfill{ ${\cal t}$~\hspace{-5.1mm}~${\cal u}$   } }
+
+\def \proof{{\noindent \bf Proof. }}
+\def \ep{\hbox{ }\hfill$\Box$}
+
+\def \point{$\bullet$}
+
+%%%%%%% propres articles
+
+\def\pt{[\phi^N_t]}
+\def\px{[\phi^N_x]}
+\def\py{[\phi^N_y]}
+\def\pz{[\phi^N_z]}
+
+\def\fx{[f_x]}
+\def\fy{[f_y]}
+\def\fz{[f_z]}
+
+\def\gx{[g_x]}
+
+ \def\DW{\Delta W}
+
+ \def\k#1{{k+ {#1}}}
+ \def\n#1{{n+ {#1}}}
+ \def\j#1{{j+ {#1}}}
+
+ \def\Ek#1{E_k\left[{#1}\right]}
+ \def\Ekh#1{\hat E_k\left[{#1}\right]}
+ \def\Ekb#1{\bar E_k\left[{#1}\right]}
+ \def\En#1{E_n\left[{#1}\right]}
+ \def\Enh#1{\hat E_n\left[{#1}\right]}
+ \def\Enb#1{\bar E_n\left[{#1}\right]}
+ \def\normeL2#1{\left\|{#1}\right\|_{L^2}}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand {\lb} {\lambda}
+\newcommand {\Chi} {{\bf \raise 1.5pt \hbox{$\delta$}}}
+%
+\newcommand {\partt} {\frac{\partial}{\partial t}}
+\newcommand {\intOM} {\int_\Omega}
+\newcommand{\lap}{\bigtriangleup}
+\newcommand{\nb}{\nabla}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \def\xhat{{\hat X}}
