@@ -161,7 +161,7 @@ The formulae in terms of the forward price is known as \emph{Black's formula}.
 A stochastic volatility models has an extra source of randomness that impacts the stock price volatility. The SABR model for the stock price is defined by equation \eqref{dS} and the additional equation for the annualized volatility
 \begin{equation}\label{dsigma}
 	\begin{split}
-	d\sigma = \nu \sigma dZ \:,
+	d\sigma = \gamma dt + \nu \sigma dZ \:,
 	\end{split}
 \end{equation}
 where $Z$ is a Brownian motion such that $dWdZ=\rho dt$. This approach has two crucial properties:
@@ -177,12 +177,12 @@ where $Z$ is a Brownian motion such that $dWdZ=\rho dt$. This approach has two c
 
 We can write down an equation for the dynamics of $\Pi$ using Ito's lemma:\begin{equation}\label{dV_vol}
 	\begin{split}
-	dV&= \biggl(V_t+\mu S V_S +\frac{1}{2} \sigma^2 S^2 V_{SS} + \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}+\rho \sigma^2 \nu S V_{S\sigma} \biggr)dt + \sigma S V_S dW + \nu \sigma V_{\sigma} dZ\:,
+	dV&= \biggl(V_t+\mu S V_S +\frac{1}{2} \sigma^2 S^2 V_{SS} + \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}+\rho \sigma^2 \nu S V_{S\sigma} \biggr)dt + \sigma S V_S dW +(\gamma + \nu \sigma) V_{\sigma} dZ\:,
 	\end{split}
 \end{equation}
 \begin{equation}\label{dU_vol}
 	\begin{split}
-	dU&= \biggl(U_t+\mu S U_S +\frac{1}{2} \sigma^2 S^2 U_{SS} + \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma} + \rho \sigma^2 \nu S U_{S\sigma}\biggr)dt + \sigma S U_S dW +\nu \sigma U_{\sigma} dZ\:,
+	dU&= \biggl(U_t+\mu S U_S +\frac{1}{2} \sigma^2 S^2 U_{SS} + \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma} + \rho \sigma^2 \nu S U_{S\sigma}\biggr)dt + \sigma S U_S dW +(\gamma + \nu \sigma) U_{\sigma} dZ\:,
 	\end{split}
 \end{equation}
 and
@@ -197,7 +197,7 @@ Now substitute \eqref{self}, \eqref{dV_vol}, and \eqref{dU_vol} in \eqref{dPi_1_
 	d\Pi &= 2 \biggl( x \mu S + z \biggl[U_t +  \mu S U_{S} + \frac{1}{2} \sigma^2 S^2 U_{SS} + \frac{1}{2} \nu^2 \sigma^2 U_{\sigma\sigma} + \rho \sigma^2 \nu S U_{S\sigma}\biggr] \\
 	&  - \biggl[ V_t  + \mu S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS} + \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma} + \rho \sigma^2 \nu S V_{S\sigma} \biggr] \\
 	& + r (V-xS-zU) \biggr)dt\\
-	& + 2\biggl( x \sigma S + z \sigma S U_{S}  - \sigma S V_S \biggr) dW  + 2 \biggl( z \nu \sigma U_{\sigma} - \nu \sigma V_{\sigma} \biggr) dZ\:.
+	& + 2\biggl( x \sigma S + z \sigma S U_{S}  - \sigma S V_S \biggr) dW  + 2 (\gamma+\nu \sigma) \biggl( z U_{\sigma} -  V_{\sigma} \biggr) dZ\:.
 	\end{split}
 \end{equation}
 The only way the third term in equation \eqref{dPi_2_vol} vanishes is with the choice
@@ -226,16 +226,16 @@ The RHS of the last equation vanishes iff there is a function $\phi(S,\sigma,t)$
 	V_t + r S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V &=\phi V_{\sigma}\:.
 	\end{split}
 \end{equation*}
-The function $\phi$ is written in terms of the \emph{market price of risk} $\lambda$ as
+The function $\phi$ is written in terms of the \emph{market price of risk} $\lambda(S,\sigma,t)$ as
 \begin{equation*}
 	\begin{split}
-	\phi = \lambda \nu \sigma\:.
+	\phi =- (\gamma-\lambda \nu \sigma)\:.
 	\end{split}
 \end{equation*}
 and the final PDE for $V$ (and $U$) becomes
 \begin{equation*}
 	\begin{split}
-	V_t + r S V_S - \lambda \nu \sigma V_{\sigma}+ \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V&=0\\
+	V_t + r S V_S +(\gamma- \lambda \nu \sigma) V_{\sigma}+ \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V&=0\\
 	\end{split}
 \end{equation*}
 This is the same PDE satisfied by
@@ -248,29 +248,72 @@ assuming the \emph{risk neutral dynamics} for the variables $S$ and $\sigma$:
 \begin{equation}\label{RN}
 	\begin{split}
 		dS &= r S dt +\sigma S dW^{*}\\
-		d\sigma &= - \lambda \nu \sigma  dt + \nu\sigma dZ^{*}\:. 
+		d\sigma &= (\gamma - \lambda \nu \sigma)  dt + \nu\sigma dZ^{*}\:. 
 	\end{split}
 \end{equation}
+\textbf{Each choice of the function $\lambda(S,\sigma,t)$ gives a rule to calculate the values of all options}. Moreover, assuming all prices are calculated with the same $\lambda$, it is possible to hedge an option using the underlying and another option on the same underlying.
+
+We will assume
+\begin{itemize}
+\item $\gamma=\overline{\gamma}\sigma$.
+\item $\lambda$ is a constant.
+\end{itemize}
+Under this model, a \emph{forward contract} has present value equal to
+\begin{equation*}
+	\begin{split}
+	E_{*}[S_T- F(t,T) | \iF_t] &= e^{r(T-t)}S_t-F(t,T)\:,
+	\end{split}
+\end{equation*}
+and therefore $F(t,T)=e^{r(T-t)}S_t$. In the same way, an imaginary forward contract with payoff $\sigma_T - G(t,T)$ has present value
+\begin{equation*}
+	\begin{split}
+	E_{*}[\sigma_T- G(t,T) | \iF_t] &= E_{*}[\sigma_T | \iF_t] - G(t,T)\:,
+	\end{split}
+\end{equation*}
+and therefore $G(t,T)=e^{(\overline{\gamma}-\lambda \nu)(T-t)}\sigma_t $.
+
 Finally, we can write down equations in terms in terms of the \emph{forward variables}
 \begin{equation*}
 	\begin{split}
-	 \widehat{F} &= e^{r(T-t)} S \\
-	 \widehat{\sigma} &= e^{- \lambda \nu (T-t) } \sigma\:. 
+	 \widehat{F_t} &= e^{r(T-t)} S_t \\
+	 \widehat{\alpha}_t &= e^{(\overline{\gamma}-\lambda \nu)(T-t)}\sigma_t \:. 
 	\end{split}
 \end{equation*}
 The result is
+\begin{equation}\label{SABR}
+	\begin{split}
+		d\widehat{F} &= e^{-(\overline{\gamma}-\lambda \nu)(T-t)}\widehat{\alpha} \widehat{F} dW^{*}\\
+		d \widehat{\alpha }&= \nu \widehat{\alpha} dZ^{*}\:.
+	\end{split}
+\end{equation}
+Hagan considers the case $\overline{\gamma}-\lambda \nu=0$ and the PDE in the forward variables is
+\begin{equation}
+	\begin{split}
+	V_t + \frac{1}{2} a^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 a^2 V_{aa}  + \rho a^2 \nu F V_{Fa} - r V&=0\\
+	\end{split}
+\end{equation}
+Notice that at maturity the forward variables match the the original variables; that is, $F_T=S_T$ and $\widehat{a}_T = \sigma_{T}$. Therefore the call value satisfies
 \begin{equation*}
 	\begin{split}
-		d\widehat{F} &= \sigma \widehat{F} dW^{*}\\
-		d \widehat{\sigma }&= \nu \widehat{\sigma} dZ^{*}\:.
+		C_{T} &= (S_T - K)_{+}= (\widehat{F}_T-K)_{+}
 	\end{split}
 \end{equation*}
-and the PDE in the forward variables is
-\begin{equation*}
+If the underlying is fairly liquid we will have quotes for $\widehat{F}_{t}$ using the current \emph{futures price} of the underlying. The \emph{forward volatility} $\widehat{\alpha}$ is harder to quote and the standard practice is to add its current value as the parameter $\alpha$ of the model.
+
+\section{The SAGR stochastic volatility model}
+Instead of assuming that $(\overline{\gamma}-\lambda \nu)=0$ in the SABR model \eqref{SABR}, we reparametrize the model as
+\begin{equation}\label{SAGR}
 	\begin{split}
-	V_t + \frac{1}{2} \sigma^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu F V_{F\sigma} - r V&=0\\
+		d\widehat{F} &= e^{-\gamma(T-t)}\widehat{\alpha} \widehat{F} dW^{*}\\
+		d \widehat{\alpha }&= \nu \widehat{\alpha} dZ^{*}\:,
 	\end{split}
-\end{equation*}
+\end{equation}
+and the parameters that we need to fit are $\nu,\alpha, \gamma$, and $\rho$. The PDE we use to calculate option prices is
+\begin{equation}\label{SAGR_PDE}
+	\begin{split}
+	V_t + \frac{1}{2}e^{-2\gamma(T-t)} a^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 a^2 V_{aa}  + e^{-\gamma(T-t)}\rho a^2 \nu F V_{Fa} - r V&=0\\
+	\end{split}
+\end{equation}
 
 \bibliographystyle{plain}	% (uses file "plain.bst")
 \bibliography{calibration}
