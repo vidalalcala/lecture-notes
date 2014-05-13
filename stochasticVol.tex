@@ -287,7 +287,7 @@ The result is
 	\end{split}
 \end{equation}
 Hagan considers the case $\overline{\gamma}-\lambda \nu=0$ and the PDE in the forward variables is
-\begin{equation}
+\begin{equation}\label{Hagan_V}
 	\begin{split}
 	V_t + \frac{1}{2} a^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 a^2 V_{aa}  + \rho a^2 \nu F V_{Fa} - r V&=0\\
 	\end{split}
@@ -300,12 +300,37 @@ Notice that at maturity the forward variables match the the original variables; 
 \end{equation*}
 If the underlying is fairly liquid we will have quotes for $\widehat{F}_{t}$ using the current \emph{futures price} of the underlying. The \emph{forward volatility} $\widehat{\alpha}$ is harder to quote and the standard practice is to add its current value as the parameter $\alpha$ of the model.
 
+\section{Hagan's SABR approximation}
+European option market prices are quoted with the implied volatility $\s$. The relationship between $V$ and $\s$ is summarized in the equations
+\begin{equation}
+	\begin{split}
+	V &= e^{-r(T-t)}(F N(d_1) - K N(d_2))\:,
+	\end{split}
+\end{equation}
+and
+\begin{equation}
+	\begin{split}
+	d_1 &= \frac{\ln(F/K)+\frac{1}{2} \s^2(T-t)}{\s \sqrt{T-t}}\\
+	d_2 &= d_1 - \s \sqrt{T-t}\:.
+	\end{split}
+\end{equation}
+Since $V=V(F,a,t)$ we have $\s = \s(F,a,t)$. Moreover, we can get a PDE for $\s$ using the PDE \eqref{Hagan_V}. The result is
+\begin{equation*}
+	\begin{split}
+	\s_t &+\frac{1}{2}a^2 F^2\s_{FF}+\frac{1}{2}\nu^2 a^2 \s_{aa}+\rho a^2 \nu F \s_{F a}\\
+	& + \frac{d_2}{\s}\biggl\{ \frac{1}{2}a^2 F \bigl[ F d_1 (\s_{F})^{2}-2\frac{\s_{F}}{\sqrt{T-t}} \bigr] \\
+	&+ \frac{1}{2} v^2 a^2 d_1 (\s_{a})^2\\
+	&+ \rho a^2 \nu \bigl[ F d_1 \s_{F}\s_{a} - \frac{\s_{a}}{\sqrt{T-t}} \bigr] \biggr\} \:.
+	\end{split}
+\end{equation*}
+
+
 \section{The SAGR stochastic volatility model}
 Instead of assuming that $(\overline{\gamma}-\lambda \nu)=0$ in the SABR model \eqref{SABR}, we reparametrize the model as
 \begin{equation}\label{SAGR}
 	\begin{split}
-		d\widehat{F} &= e^{-\gamma(T-t)}\widehat{\alpha} \widehat{F} dW^{*}\\
-		d \widehat{\alpha }&= \nu \widehat{\alpha} dZ^{*}\:,
+		d\widehat{F} &= e^{-\gamma(T-t)}\widehat{a} \widehat{F} dW^{*}\\
+		d \widehat{a }&= \nu \widehat{a} dZ^{*}\:,
 	\end{split}
 \end{equation}
 and the parameters that we need to fit are $\nu,\alpha, \gamma$, and $\rho$. The PDE we use to calculate option prices is
