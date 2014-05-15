@@ -226,7 +226,7 @@ The RHS of the last equation vanishes iff there is a function $\phi(S,\sigma,t)$
 	V_t + r S V_S + \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V &=\phi V_{\sigma}\:.
 	\end{split}
 \end{equation*}
-The function $\phi$ is written in terms of the \emph{market price of risk} $\lambda(S,\sigma,t)$ as
+The function $\phi$ is written in terms of the \emph{market price of volatility risk} $\lambda(S,\sigma,t)$ as
 \begin{equation*}
 	\begin{split}
 	\phi =- (\gamma-\lambda \nu \sigma)\:.
@@ -261,13 +261,13 @@ We will assume
 Under this model, a \emph{forward contract} has present value equal to
 \begin{equation*}
 	\begin{split}
-	E_{*}[S_T- F(t,T) | \iF_t] &= e^{r(T-t)}S_t-F(t,T)\:,
+	e^{-r(T-t)}E_{*}[S_T- F(t,T) | \iF_t] &= e^{-r(T-t)}[e^{r(T-t)}S_t-F(t,T)]\:,
 	\end{split}
 \end{equation*}
 and therefore $F(t,T)=e^{r(T-t)}S_t$. In the same way, an imaginary forward contract with payoff $\sigma_T - G(t,T)$ has present value
 \begin{equation*}
 	\begin{split}
-	E_{*}[\sigma_T- G(t,T) | \iF_t] &= E_{*}[\sigma_T | \iF_t] - G(t,T)\:,
+	e^{-r(T-t)}E_{*}[\sigma_T- G(t,T) | \iF_t] &=e^{-r(T-t)} [E_{*}[\sigma_T | \iF_t] - G(t,T)]\:,
 	\end{split}
 \end{equation*}
 and therefore $G(t,T)=e^{(\overline{\gamma}-\lambda \nu)(T-t)}\sigma_t $.
@@ -292,7 +292,7 @@ Hagan considers the case $\overline{\gamma}-\lambda \nu=0$ and the PDE in the fo
 	V_t + \frac{1}{2} a^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 a^2 V_{aa}  + \rho a^2 \nu F V_{Fa} - r V&=0\\
 	\end{split}
 \end{equation}
-Notice that at maturity the forward variables match the the original variables; that is, $F_T=S_T$ and $\widehat{a}_T = \sigma_{T}$. Therefore the call value satisfies
+Notice that at maturity the forward variables match the the original variables; that is, $F_T=S_T$ and $\widehat{\alpha}_T = \sigma_{T}$. Therefore the call value satisfies
 \begin{equation*}
 	\begin{split}
 		C_{T} &= (S_T - K)_{+}= (\widehat{F}_T-K)_{+}
@@ -323,22 +323,100 @@ Since $V=V(F,a,t)$ we have $\s = \s(F,a,t)$. Moreover, we can get a PDE for $\s$
 	&+ \rho a^2 \nu \bigl[ F d_1 \s_{F}\s_{a} - \frac{\s_{a}}{\sqrt{T-t}} \bigr] \biggr\} \:.
 	\end{split}
 \end{equation*}
+This is a nonlinear PDE and we will use it soon to find an approximation of $\Sigma$, but we need to find the boundary condition at the final time for $\Sigma$.
 
-
-\section{The SAGR stochastic volatility model}
-Instead of assuming that $(\overline{\gamma}-\lambda \nu)=0$ in the SABR model \eqref{SABR}, we reparametrize the model as
-\begin{equation}\label{SAGR}
+\section{Implied volatility close to maturity.}
+We start with the function $W=E_{*}[(F-K)_{+}]$ which satisfies the PDE
+\begin{equation}\label{Hagan_W}
 	\begin{split}
-		d\widehat{F} &= e^{-\gamma(T-t)}\widehat{a} \widehat{F} dW^{*}\\
-		d \widehat{a }&= \nu \widehat{a} dZ^{*}\:,
+	W_t + \frac{1}{2} a^2 F^2 W_{FF}+ \frac{1}{2} \nu^2 a^2 W_{aa}  + \rho a^2 \nu F W_{Fa} &=0\:,
 	\end{split}
 \end{equation}
-and the parameters that we need to fit are $\nu,\alpha, \gamma$, and $\rho$. The PDE we use to calculate option prices is
-\begin{equation}\label{SAGR_PDE}
+with the boundary condition
+\begin{equation}\label{bndry_W}
 	\begin{split}
-	V_t + \frac{1}{2}e^{-2\gamma(T-t)} a^2 F^2 V_{FF}+ \frac{1}{2} \nu^2 a^2 V_{aa}  + e^{-\gamma(T-t)}\rho a^2 \nu F V_{Fa} - r V&=0\\
+	W(F,a,T)=  (F-K)_{+}	
 	\end{split}
 \end{equation}
+Taking a time derivative on both sides of \eqref{Hagan_W}, we can see that $W_t$ also satisfies the PDE \eqref{Hagan_W}. Now substitute \eqref{bndry_W} in \eqref{Hagan_W}. The result is the boundary condition $W_t(F,K,T)+\frac{1}{2}a^2 K^2 \delta_{(F-K)}=0$. We can \emph{approximate} $W_t$ close to maturity as a multiple of a Gaussian function. 
+
+
+\section{Asymptotic expansion over $\nu$ }
+
+%Instead of assuming that $(\overline{\gamma}-\lambda \nu)=0$ in the SABR model \eqref{SABR}, we reparametrize the model as
+%\begin{equation}\label{SAGR}
+%	\begin{split}
+%		d\widehat{F} &= e^{-\gamma(T-t)}\widehat{a} \widehat{F} dW^{*}\\
+%		d \widehat{a }&= \nu \widehat{a} dZ^{*}\:,
+%	\end{split}
+%\end{equation}
+%and the parameters that we need to fit are $\nu,\alpha, \gamma$, and $\rho$.
+
+The PDE we use to calculate option prices is
+\begin{equation}\label{SABR_PDE}
+	\begin{split}
+	W_t + \frac{1}{2} a^2 F^2 W_{FF}+ \frac{1}{2} \nu^2 a^2 W_{aa}  + \rho a^2 \nu F W_{Fa}&=0\\
+	W(F,a,T)&=(F-K)_{+}\:,
+	\end{split}
+\end{equation}
+where $W=E_{*}[(\widehat{F}_{T}-K)_{+}]$. We will try to approximate the solution with an asymptotic expansion
+\begin{equation}\label{expansion}
+	\begin{split}
+	W(F,a,t,\nu) = W^{0}(F,a,t) + W^{1}(F,a,t) \nu + W^{2}(F,a,t) \nu^2 +\ldots
+	\end{split}
+\end{equation}
+Substitute \eqref{expansion} in \eqref{SABR_PDE} and collect $O(1)$ terms. The result is
+\begin{equation}\label{order_0}
+	\begin{split}
+	W_t^{0} + \frac{1}{2}  a^2 F^2 W_{FF}^{0}&=0\\
+	W^{0}(F,a,T)&=(F-K)_{+}\:,
+	\end{split}
+\end{equation}
+There are no derivatives w.r.t $a$ in the previous equation, therefore the solution is given by Black's formula with $a$ playing the role of the volatility; this is,
+\begin{equation*}
+	\begin{split}
+	W^{0}(F,a,t)&= FN(d_1)-KN(d_2)\\
+	d_{1}&=\frac{\ln\bigl( \frac{F}{K}\bigr)+\frac{1}{2} a^2 (T-t)}{a\sqrt{T-t}}\:.
+	\end{split}
+\end{equation*}
+For convenience we will denote $\tau = T -t$. Now we collect $O(\nu)$ terms in equation \eqref{SABR_PDE}. The result is
+\begin{equation}
+	\begin{split}
+	W_t^{1} + \frac{1}{2}  a^2 F^2 W_{FF}^{1}+\rho a^2 F W_{Fa}^{0}&=0\\
+	W^{1}(F,a,T)&=0\:.
+	\end{split}
+\end{equation}
+We calculate $W_{Fa}^{0}$ using the financial greeks and rearranging terms:
+\begin{equation}\label{order_1}
+	\begin{split}
+	W_t^{1} + \frac{1}{2}  a^2 F^2 W_{FF}^{1} &=\rho a  F d_2 \frac{e^{-d_1^2 / 2}}{\sqrt{2\pi}}\\
+	W^{1}(F,a,T)&=0\:.
+	\end{split}
+\end{equation}
+Finally we define $y=d_2 \sqrt{\tau} = \frac{ \ln\bigl( \frac{F}{K}\bigr) - \frac{1}{2} a^2 (T-t)}{a}$ and the PDE in the new variables becomes
+\begin{equation}\label{order_1}
+	\begin{split}
+	W_t^{1} + \frac{1}{2}  W_{yy}^{1} &=\rho a  K  y \frac{e^{-\frac{y^2}{2 \tau}}}{\sqrt{2\pi \tau}}\\
+	W^{1}(F,a,T)&=0\:.
+	\end{split}
+\end{equation}
+Now we can use the heat kernel to calculate the solution:
+\begin{equation*}
+	\begin{split}
+	W^{1}(y,a,t)&=\int_{t}^{T}\int_{-\infty}^{\infty} \rho a  K  x \frac{e^{-\frac{x^2}{2 \tau}}}{\sqrt{2\pi \tau}} \frac{e^{-\frac{(x-y)^2}{2 t}}}{\sqrt{2\pi t}} dx dt\\
+	&=\int_{0}^{T} \frac{\rho a  K \tau}{T^{3/2}} y \frac{e^{-\frac{y^2}{2T}}}{\sqrt{2\pi}} d t\\
+	&=\frac{\rho a  K }{T^{3/2}} y \frac{e^{-\frac{y^2}{2T}}}{\sqrt{2\pi}} \int_{0}^{T} \tau d t\\
+	&=\frac{\rho a  K }{2} y \frac{e^{-\frac{y^2}{2T}}}{\sqrt{2\pi T}}\:.
+	\end{split}
+\end{equation*}
+Going back to the original variables we have found the first correction; this is,
+\begin{equation*}
+	\begin{split}
+	W=FN(d_1)-KN(d_2)+\nu \frac{\rho a K }{2} d_2 \frac{e^{-\frac{d_2^2}{2(T/\tau)}} }{\sqrt{2\pi (T/\tau)}} +O(\nu^2)\:.
+	\end{split}
+\end{equation*}
+
+
 
 \bibliographystyle{plain}	% (uses file "plain.bst")
 \bibliography{calibration}
