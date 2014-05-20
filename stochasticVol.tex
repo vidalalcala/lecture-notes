@@ -386,37 +386,92 @@ For convenience we will denote $\tau = T -t$. Now we collect $O(\nu)$ terms in e
 	W^{1}(F,a,T)&=0\:.
 	\end{split}
 \end{equation}
-We calculate $W_{Fa}^{0}$ using the financial greeks and rearranging terms:
+We calculate $W_{Fa}^{0}$ using the financial greeks and, after rearranging terms, the previous equation becomes
 \begin{equation}\label{order_1}
 	\begin{split}
 	W_t^{1} + \frac{1}{2}  a^2 F^2 W_{FF}^{1} &=\rho a  F d_2 \frac{e^{-d_1^2 / 2}}{\sqrt{2\pi}}\\
 	W^{1}(F,a,T)&=0\:.
 	\end{split}
 \end{equation}
-Finally we define $y=d_2 \sqrt{\tau} = \frac{ \ln\bigl( \frac{F}{K}\bigr) - \frac{1}{2} a^2 (T-t)}{a}$ and the PDE in the new variables becomes
+Finally we define $y=d_2 \sqrt{\tau} = \frac{ \ln\bigl( \frac{F}{K}\bigr) - \frac{1}{2} a^2 (T-t)}{a}$ and the PDE in the new variables reads
 \begin{equation}\label{order_1}
 	\begin{split}
 	W_t^{1} + \frac{1}{2}  W_{yy}^{1} &=\rho a  K  y \frac{e^{-\frac{y^2}{2 \tau}}}{\sqrt{2\pi \tau}}\\
-	W^{1}(F,a,T)&=0\:.
+	&= -\rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{\tau}) \\
+	W^{1}(y,a,T)&=0\:.
 	\end{split}
 \end{equation}
-Now we can use the heat kernel to calculate the solution:
+Now we can use the heat kernel to calculate the solution of the previous \emph{non-homogeneous} heat equation. The key relationships we will use in the next calculations are
+\begin{equation}\label{heat_kernel}
+	\begin{split}
+	\int_{-\infty}^{\infty}\frac{e^{-\frac{(y-x)^2}{2 t}}}{\sqrt{2\pi t}} \frac{d^k}{dy^k} N(y/\sqrt{s})dy&=\frac{d^k}{dx^k} N(x/\sqrt{s+t}) \:, \qquad k>1\\
+	\int_{-\infty}^{\infty}\frac{e^{-\frac{(y-x)^2}{2 t}}}{\sqrt{2\pi t}} \:y\:\frac{d^k}{dy^k} N(y/\sqrt{s})dy&=x \frac{d^k}{dx^k} N(x/\sqrt{s+t}) -\frac{s}{s+t} \frac{d^{k-1}}{dx^{k-1}}\biggl[ x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{s+t}}\biggr)\biggr]\:, \qquad k>1
+	\end{split}
+\end{equation}
+Duhamel's principle gives
 \begin{equation*}
 	\begin{split}
-	W^{1}(y,a,t)&=\int_{t}^{T}\int_{-\infty}^{\infty} \rho a  K  x \frac{e^{-\frac{x^2}{2 \tau}}}{\sqrt{2\pi \tau}} \frac{e^{-\frac{(x-y)^2}{2 t}}}{\sqrt{2\pi t}} dx dt\\
-	&=\int_{0}^{T} \frac{\rho a  K \tau}{T^{3/2}} y \frac{e^{-\frac{y^2}{2T}}}{\sqrt{2\pi}} d t\\
-	&=\frac{\rho a  K }{T^{3/2}} y \frac{e^{-\frac{y^2}{2T}}}{\sqrt{2\pi}} \int_{0}^{T} \tau d t\\
-	&=\frac{\rho a  K }{2} y \frac{e^{-\frac{y^2}{2T}}}{\sqrt{2\pi T}}\:.
+	W^{1}(y,a,t_0)&=-\int_{t_0}^{T}\int_{-\infty}^{\infty} \rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{\tau}) \frac{e^{-\frac{(x-y)^2}{2 (t-t_0)}}}{\sqrt{2\pi (t-t_0)}} dx dt\\
+	&=-\int_{t_0}^{T} \rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{T-t_0})dt\\
+	&=-\rho a K \frac{d^2}{dy^2}N(y/\sqrt{T-t_0})\int_{t_0}^{T}  \tau dt\\
+	&=-\rho a K \frac{d^2}{dy^2}N(y/\sqrt{T-t_0})\frac{1}{2}(T-t_0)^2\:.
 	\end{split}
 \end{equation*}
-Going back to the original variables we have found the first correction; this is,
+In other words,
 \begin{equation*}
 	\begin{split}
-	W=FN(d_1)-KN(d_2)+\nu \frac{\rho a K }{2} d_2 \frac{e^{-\frac{d_2^2}{2(T/\tau)}} }{\sqrt{2\pi (T/\tau)}} +O(\nu^2)\:.
+	W^{1}(y,a,t)&=-\frac{1}{2}\rho a K \tau^2 \frac{d^2}{dy^2}N(y/\sqrt{\tau})\:.
 	\end{split}
 \end{equation*}
-
-
+Going back to the original variables, we have found the first correction; this is,
+\begin{equation*}
+	\begin{split}
+	W&=FN(d_1)-KN(d_2)-\nu \frac{\rho a K \tau^{3/2}}{2} d_2 \frac{e^{-\frac{d_2^2}{2}} }{\sqrt{2\pi}} +O(\nu^2)\:.
+	\end{split}
+\end{equation*}
+We continue the approximation by collecting $O(\nu^2)$ terms in equation \eqref{SABR_PDE}. The result is
+\begin{equation*}
+	\begin{split}
+	W^{2}_{t} +\frac{1}{2} a^2 F^2 W^{2}_{FF}+\frac{1}{2} a^2 W^{0}_{aa}+\rho a^2 F W^{1}_{Fa}&=0\:.
+	\end{split}
+\end{equation*}
+Using the explicit formulae for $W^{0}$ and $W^{1}$ and the finance greeks we calculate
+\begin{equation*}
+	\begin{split}
+	  W_{a}^{0} &= K\tau \frac{d}{dy} N(y/\sqrt{\tau})\\
+	  W_{aa}^{0} &= K\tau\biggl( \tau - \frac{y}{a}\biggr) \frac{d^2}{d y^2} N(y/\sqrt{\tau})\\
+	  W_{F}^{1} &= -\frac{1}{2}\rho \frac{K}{F} \tau^2 \frac{d^3}{dy^3}N(y/\sqrt{\tau})\\
+	    W_{Fa}^{1} &= -\frac{1}{2}\rho \frac{K}{F} \tau^2 \biggl(\tau-\frac{y}{a}\biggr) \frac{d^4}{dy^4}N(y/\sqrt{\tau})
+	\end{split}
+\end{equation*}
+In terms of the variable $y$ we obtain
+\begin{equation*}
+	\begin{split}
+	W^{2}_{t} +\frac{1}{2} W^{2}_{yy} &= \frac{1}{2}aK\tau ( a\tau - y ) \frac{d^2}{d y^2} N(y/\sqrt{\tau}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-y ) \frac{d^4}{dy^4}N(y/\sqrt{\tau})\:.
+	\end{split}
+\end{equation*}
+Duhamel's principle and equation \eqref{heat_kernel} give
+\begin{equation*}
+	\begin{split}
+	W^{2}(y,a,t_0) &= \int_{t_0}^{T}\biggl[  \frac{1}{2}aK\tau ( a\tau - x ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-x ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
+	&+ \frac{1}{2}aK\frac{\tau^2}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
+	&- \frac{1}{2}\rho^2 aK  \frac{\tau^3}{T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]\:dt\\
+	&= \int_{0}^{T-t_0}\biggl[  \frac{1}{2}aK\tau ( a\tau - x ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-x ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
+	&+ \frac{1}{2}aK \frac{\tau^2}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
+	&- \frac{1}{2}\rho^2 aK \frac{\tau^3}{T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]\:d\tau\\
+	&= \biggl[  \frac{1}{2}aK\tau^2 ( a\tau/3 - x/2 ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^3 (a\tau/4-x/3 ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
+	&+ \frac{1}{6}aK \frac{\tau^3}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
+	&- \frac{1}{8}\rho^2 aK \frac{\tau^4}{ T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]_{\tau = 0}^{\tau = T-t_0}\:.\\
+	\end{split}
+\end{equation*}
+In other words
+\begin{equation*}
+	\begin{split}
+	W^{2}(y,a,t) &=  \biggl[  \frac{1}{2}aK\tau^2 ( a\tau/3 - x/2 ) \frac{d^2}{d x^2} N(x/\sqrt{\tau}) -\frac{1}{2}\rho^2 a K \tau^3 (a\tau/4-x/3 ) \frac{d^4}{dx^4}N(x/\sqrt{\tau})\\
+	&+ \frac{1}{6}aK \tau^{2} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{\tau}}\biggr)\biggr)\\ 
+	&- \frac{1}{8}\rho^2 aK \tau^{3} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{\tau}}\biggr)\biggr) \biggr]\:.
+	\end{split}
+\end{equation*}
 
 \bibliographystyle{plain}	% (uses file "plain.bst")
 \bibliography{calibration}
