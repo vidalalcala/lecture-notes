@@ -94,7 +94,7 @@ and the portfolio value does not change; that is,
 	d\Pi = 0,\qquad t\geq 0\:.
 	\end{split}
 \end{equation}
-We need models for $dS_i$ and $dV$ in order to decide if the previous equations hold.
+We need models for $dS_i$ and $dV$ in order to decide if the previous equations hold. 
 
 In the Black Scholes model we assume that
 \begin{equation}\label{dS}
@@ -102,7 +102,7 @@ In the Black Scholes model we assume that
 		dS &= \mu S dt +\sigma S dW\:,
 	\end{split}
 \end{equation}
-and use the \emph{no arbitrage} hypothesis to derive the value of $V$ and $dV$. Namely, $V$ must be a function of $S$ and $t$; that is, $V = V(S,t)$. A portfolio $R$ with $x$ shares of $S$ and $y$ shares of $A$ is \emph{replicating} if and only if $\Pi=R-V$ is a hedging strategy. It follows that equations \eqref{self} and \eqref{constant} hold. We calculate, using Ito's formula,
+and use the \emph{no arbitrage} hypothesis to derive the value of $V$ and $dV$. Namely, $V$ must be a function of $S$ and $t$; that is, $V = V(S,t)$. We will also \emph{assume} that $V$ has two continuous derivatives with respect to $S$ and one continuous derivative with respect to $t$. A portfolio $R$ with $x$ shares of $S$ and $y$ shares of $A$ is \emph{replicating} if and only if $\Pi=R-V$ is a hedging strategy. It follows that equations \eqref{self} and \eqref{constant} hold. We calculate, using Ito's formula,
 \begin{equation}\label{dV}
 	\begin{split}
 	dV&= \biggl(V_t+\mu S V_S +\frac{1}{2} \sigma^2 S^2 V_{SS}\biggr)dt+\biggl(\sigma S V_S \biggr)dW\:,
@@ -233,25 +233,25 @@ The function $\phi$ is written in terms of the \emph{market price of volatility 
 	\end{split}
 \end{equation*}
 and the final PDE for $V$ (and $U$) becomes
-\begin{equation*}
+\begin{equation}\label{PDE_vol_risk}
 	\begin{split}
 	V_t + r S V_S +(\gamma- \lambda \nu \sigma) V_{\sigma}+ \frac{1}{2} \sigma^2 S^2 V_{SS}+ \frac{1}{2} \nu^2 \sigma^2 V_{\sigma\sigma}  + \rho \sigma^2 \nu S V_{S\sigma} - r V&=0\\
 	\end{split}
-\end{equation*}
+\end{equation}
 This is the same PDE satisfied by
 \begin{equation*}
 	\begin{split}
 	V(S,\sigma,t) = E_{S,\sigma,t} [e^{-r(T-t)} f(S_T,\sigma_T,T)] \:,
 	\end{split}
 \end{equation*}
-assuming the \emph{risk neutral dynamics} for the variables $S$ and $\sigma$:
+assuming the \emph{risk neutral dynamics} for the variables $S$ and $\sigma$
 \begin{equation}\label{RN}
 	\begin{split}
 		dS &= r S dt +\sigma S dW^{*}\\
-		d\sigma &= (\gamma - \lambda \nu \sigma)  dt + \nu\sigma dZ^{*}\:. 
+		d\sigma &= (\gamma - \lambda \nu \sigma)  dt + \nu\sigma dZ^{*}\:,
 	\end{split}
 \end{equation}
-\textbf{Each choice of the function $\lambda(S,\sigma,t)$ gives a rule to calculate the values of all options}. Moreover, assuming all prices are calculated with the same $\lambda$, it is possible to hedge an option using the underlying and another option on the same underlying.
+and the condition $\rho\leq 0$. The case $\rho$ is analyzed in section \eqref{rho}. \textbf{Each choice of the function $\lambda(S,\sigma,t)$ gives a rule to calculate the values of all options}. Moreover, assuming all prices are calculated with the same $\lambda$, it is possible to hedge an option using the underlying and another option on the same underlying.
 
 We will assume
 \begin{itemize}
@@ -343,15 +343,6 @@ Taking a time derivative on both sides of \eqref{Hagan_W}, we can see that $W_t$
 
 \section{Asymptotic expansion over $\nu$ }
 
-%Instead of assuming that $(\overline{\gamma}-\lambda \nu)=0$ in the SABR model \eqref{SABR}, we reparametrize the model as
-%\begin{equation}\label{SAGR}
-%	\begin{split}
-%		d\widehat{F} &= e^{-\gamma(T-t)}\widehat{a} \widehat{F} dW^{*}\\
-%		d \widehat{a }&= \nu \widehat{a} dZ^{*}\:,
-%	\end{split}
-%\end{equation}
-%and the parameters that we need to fit are $\nu,\alpha, \gamma$, and $\rho$.
-
 The PDE we use to calculate option prices is
 \begin{equation}\label{SABR_PDE}
 	\begin{split}
@@ -359,23 +350,23 @@ The PDE we use to calculate option prices is
 	W(F,a,T)&=(F-K)_{+}\:,
 	\end{split}
 \end{equation}
-where $W=E_{*}[(\widehat{F}_{T}-K)_{+}]$. We will try to approximate the solution with an asymptotic expansion
+where $W=E_{*}[(\widehat{F}_{T}-K)_{+}]$. We will try to approximate the solution of the previous equation with an asymptotic expansion
 \begin{equation}\label{expansion}
 	\begin{split}
-	W(F,a,t,\nu) = W^{0}(F,a,t) + W^{1}(F,a,t) \nu + W^{2}(F,a,t) \nu^2 +\ldots
+	W(F,a,t;\nu) = W^{0}(F,a,t) + W^{1}(F,a,t) \nu + W^{2}(F,a,t) \nu^2 + O(\nu^3)
 	\end{split}
 \end{equation}
 Substitute \eqref{expansion} in \eqref{SABR_PDE} and collect $O(1)$ terms. The result is
 \begin{equation}\label{order_0}
 	\begin{split}
 	W_t^{0} + \frac{1}{2}  a^2 F^2 W_{FF}^{0}&=0\\
-	W^{0}(F,a,T)&=(F-K)_{+}\:,
+	W^{0}&=(F-K)_{+}\:;\qquad t=T\:.
 	\end{split}
 \end{equation}
 There are no derivatives w.r.t $a$ in the previous equation, therefore the solution is given by Black's formula with $a$ playing the role of the volatility; this is,
 \begin{equation*}
 	\begin{split}
-	W^{0}(F,a,t)&= FN(d_1)-KN(d_2)\\
+	W^{0}&= FN(d_1)-KN(d_2)\\
 	d_{1}&=\frac{\ln\bigl( \frac{F}{K}\bigr)+\frac{1}{2} a^2 (T-t)}{a\sqrt{T-t}}\:.
 	\end{split}
 \end{equation*}
@@ -383,50 +374,50 @@ For convenience we will denote $\tau = T -t$. Now we collect $O(\nu)$ terms in e
 \begin{equation}
 	\begin{split}
 	W_t^{1} + \frac{1}{2}  a^2 F^2 W_{FF}^{1}+\rho a^2 F W_{Fa}^{0}&=0\\
-	W^{1}(F,a,T)&=0\:.
+	W^{1}&=0\:,\qquad t=T\:.
 	\end{split}
 \end{equation}
-We calculate $W_{Fa}^{0}$ using the financial greeks and, after rearranging terms, the previous equation becomes
+We calculate $W_{Fa}^{0}$ using the financial greeks. After rearranging terms, the previous equation becomes
 \begin{equation}\label{order_1}
 	\begin{split}
 	W_t^{1} + \frac{1}{2}  a^2 F^2 W_{FF}^{1} &=\rho a  F d_2 \frac{e^{-d_1^2 / 2}}{\sqrt{2\pi}}\\
-	W^{1}(F,a,T)&=0\:.
+	W^{1}&=0\:,\qquad t=T\:.
 	\end{split}
 \end{equation}
 Finally we define $y=d_2 \sqrt{\tau} = \frac{ \ln\bigl( \frac{F}{K}\bigr) - \frac{1}{2} a^2 (T-t)}{a}$ and the PDE in the new variables reads
 \begin{equation}\label{order_1}
 	\begin{split}
-	W_t^{1} + \frac{1}{2}  W_{yy}^{1} &=\rho a  K  y \frac{e^{-\frac{y^2}{2 \tau}}}{\sqrt{2\pi \tau}}\\
-	&= -\rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{\tau}) \\
-	W^{1}(y,a,T)&=0\:.
+	W_t^{1} + \frac{1}{2}  W_{yy}^{1}&= -\rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{\tau}) \\
+	W^{1}&=0\:,\qquad t=T\:.
 	\end{split}
 \end{equation}
 Now we can use the heat kernel to calculate the solution of the previous \emph{non-homogeneous} heat equation. The key relationships we will use in the next calculations are
 \begin{equation}\label{heat_kernel}
 	\begin{split}
 	\int_{-\infty}^{\infty}\frac{e^{-\frac{(y-x)^2}{2 t}}}{\sqrt{2\pi t}} \frac{d^k}{dy^k} N(y/\sqrt{s})dy&=\frac{d^k}{dx^k} N(x/\sqrt{s+t}) \:, \qquad k>1\\
-	\int_{-\infty}^{\infty}\frac{e^{-\frac{(y-x)^2}{2 t}}}{\sqrt{2\pi t}} \:y\:\frac{d^k}{dy^k} N(y/\sqrt{s})dy&=x \frac{d^k}{dx^k} N(x/\sqrt{s+t}) -\frac{s}{s+t} \frac{d^{k-1}}{dx^{k-1}}\biggl[ x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{s+t}}\biggr)\biggr]\:, \qquad k>1
+	\int_{-\infty}^{\infty}\frac{e^{-\frac{(y-x)^2}{2 t}}}{\sqrt{2\pi t}} \:y\:\frac{d^k}{dy^k} N(y/\sqrt{s})dy&=x \frac{d^k}{dx^k} N(x/\sqrt{s+t}) -\frac{t}{s+t} \frac{d^{k-1}}{dx^{k-1}}\biggl[ x \frac{d}{dx}N \bigl( x/\sqrt{s+t}\bigr)\biggr]\:, \qquad k>1\\
+	\int_{-\infty}^{\infty}\frac{e^{-\frac{(y-x)^2}{2 t}}}{\sqrt{2\pi t}} \:y\:\frac{d^k}{dy^k} N(y/\sqrt{s})dy&=\frac{s}{s+t}\:x \frac{d^k}{dx^k} N(x/\sqrt{s+t}) -\frac{t}{s+t}(k-1) \frac{d^{k-1}}{dx^{k-1}}N \bigl( x/\sqrt{s+t}\bigr)\:, \qquad k>1
 	\end{split}
 \end{equation}
 Duhamel's principle gives
 \begin{equation*}
 	\begin{split}
-	W^{1}(y,a,t_0)&=-\int_{t_0}^{T}\int_{-\infty}^{\infty} \rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{\tau}) \frac{e^{-\frac{(x-y)^2}{2 (t-t_0)}}}{\sqrt{2\pi (t-t_0)}} dx dt\\
-	&=-\int_{t_0}^{T} \rho a K \tau \frac{d^2}{dy^2}N(y/\sqrt{T-t_0})dt\\
-	&=-\rho a K \frac{d^2}{dy^2}N(y/\sqrt{T-t_0})\int_{t_0}^{T}  \tau dt\\
-	&=-\rho a K \frac{d^2}{dy^2}N(y/\sqrt{T-t_0})\frac{1}{2}(T-t_0)^2\:.
+	W^{1}&=\int_{t}^{T}\int_{-\infty}^{\infty} \rho a K (T-s) \frac{d^2}{dz^2}N(z/\sqrt{T-s}) \frac{e^{-\frac{(z-y)^2}{2 (s-t)}}}{\sqrt{2\pi (s-t)}} dz ds\\
+	&=\int_{t}^{T} \rho a K (T-s) \frac{d^2}{dy^2}N(y/\sqrt{T-t})ds\\
+	&=\rho a K \frac{d^2}{dy^2}N(y/\sqrt{T-t})\int_{t}^{T}  (T-s) ds\\
+	&=\rho a K \frac{d^2}{dy^2}N(y/\sqrt{T-t})\frac{1}{2}(T-t)^2\:.
 	\end{split}
 \end{equation*}
 In other words,
 \begin{equation*}
 	\begin{split}
-	W^{1}(y,a,t)&=-\frac{1}{2}\rho a K \tau^2 \frac{d^2}{dy^2}N(y/\sqrt{\tau})\:.
+	W^{1}&=\frac{1}{2}\rho a K \tau^2 \frac{d^2}{dy^2}N(y/\sqrt{\tau})\:.
 	\end{split}
 \end{equation*}
 Going back to the original variables, we have found the first correction; this is,
 \begin{equation*}
 	\begin{split}
-	W&=FN(d_1)-KN(d_2)-\nu \frac{\rho a K \tau^{3/2}}{2} d_2 \frac{e^{-\frac{d_2^2}{2}} }{\sqrt{2\pi}} +O(\nu^2)\:.
+	W&=FN(d_1)-KN(d_2)+\nu \frac{\rho a K \tau }{2} d_2 \frac{e^{-\frac{d_2^2}{2}} }{\sqrt{2\pi}} +O(\nu^2)\:.
 	\end{split}
 \end{equation*}
 We continue the approximation by collecting $O(\nu^2)$ terms in equation \eqref{SABR_PDE}. The result is
@@ -447,29 +438,30 @@ Using the explicit formulae for $W^{0}$ and $W^{1}$ and the finance greeks we ca
 In terms of the variable $y$ we obtain
 \begin{equation*}
 	\begin{split}
-	W^{2}_{t} +\frac{1}{2} W^{2}_{yy} &= \frac{1}{2}aK\tau ( a\tau - y ) \frac{d^2}{d y^2} N(y/\sqrt{\tau}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-y ) \frac{d^4}{dy^4}N(y/\sqrt{\tau})\:.
+	W^{2}_{t} +\frac{1}{2} W^{2}_{yy} &= -\frac{1}{2}aK\tau ( a\tau - y ) \frac{d^2}{d y^2} N(y/\sqrt{\tau}) +\frac{1}{2}\rho^2 a K \tau^2 (a\tau-y ) \frac{d^4}{dy^4}N(y/\sqrt{\tau})\:.
 	\end{split}
 \end{equation*}
 Duhamel's principle and equation \eqref{heat_kernel} give
+%\begin{equation*}
+%	\begin{split}
+%	W^{2}(x,a,t_0) &= \int_{t_0}^{T}\biggl[  \frac{1}{2}aK\tau ( a\tau - x ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-x ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
+%	&+ \frac{1}{2}aK\frac{\tau^2}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
+%	&- \frac{1}{2}\rho^2 aK  \frac{\tau^3}{T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]\:dt\\
+%	&= \int_{0}^{T-t_0}\biggl[  \frac{1}{2}aK\tau ( a\tau - x ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-x ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
+%	&+ \frac{1}{2}aK \frac{\tau^2}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
+%	&- \frac{1}{2}\rho^2 aK \frac{\tau^3}{T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]\:d\tau\\
+%	&= \biggl[  \frac{1}{2}aK\tau^2 ( a\tau/3 - x/2 ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^3 (a\tau/4-x/3 ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
+%	&+ \frac{1}{6}aK \frac{\tau^3}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
+%	&- \frac{1}{8}\rho^2 aK \frac{\tau^4}{ T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]_{\tau = 0}^{\tau = T-t_0}\:.\\
+%	\end{split}
+%\end{equation*}
+%In other words
 \begin{equation*}
 	\begin{split}
-	W^{2}(y,a,t_0) &= \int_{t_0}^{T}\biggl[  \frac{1}{2}aK\tau ( a\tau - x ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-x ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
-	&+ \frac{1}{2}aK\frac{\tau^2}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
-	&- \frac{1}{2}\rho^2 aK  \frac{\tau^3}{T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]\:dt\\
-	&= \int_{0}^{T-t_0}\biggl[  \frac{1}{2}aK\tau ( a\tau - x ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^2 (a\tau-x ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
-	&+ \frac{1}{2}aK \frac{\tau^2}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
-	&- \frac{1}{2}\rho^2 aK \frac{\tau^3}{T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]\:d\tau\\
-	&= \biggl[  \frac{1}{2}aK\tau^2 ( a\tau/3 - x/2 ) \frac{d^2}{d x^2} N(x/\sqrt{T-t_0}) -\frac{1}{2}\rho^2 a K \tau^3 (a\tau/4-x/3 ) \frac{d^4}{dx^4}N(x/\sqrt{T-t_0})\\
-	&+ \frac{1}{6}aK \frac{\tau^3}{T-t_0} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr)\\ 
-	&- \frac{1}{8}\rho^2 aK \frac{\tau^4}{ T-t_0} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{T-t_0}}\biggr)\biggr) \biggr]_{\tau = 0}^{\tau = T-t_0}\:.\\
-	\end{split}
-\end{equation*}
-In other words
-\begin{equation*}
-	\begin{split}
-	W^{2}(y,a,t) &=  \biggl[  \frac{1}{2}aK\tau^2 ( a\tau/3 - x/2 ) \frac{d^2}{d x^2} N(x/\sqrt{\tau}) -\frac{1}{2}\rho^2 a K \tau^3 (a\tau/4-x/3 ) \frac{d^4}{dx^4}N(x/\sqrt{\tau})\\
-	&+ \frac{1}{6}aK \tau^{2} \frac{d}{dx}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{\tau}}\biggr)\biggr)\\ 
-	&- \frac{1}{8}\rho^2 aK \tau^{3} \frac{d^{3}}{dx^3}\biggl( x \frac{d}{dx}N\biggl( \frac{x}{\sqrt{\tau}}\biggr)\biggr) \biggr]\:.
+	W^{2}&=  \frac{1}{6} a K \tau^2 (a\tau - y) \frac{d^2}{d y^2} N(y/\sqrt{\tau})
+	- \frac{1}{8} \rho^2 a K \tau^3 ( a\tau - y )  \frac{d^4}{d y^4} N(y/\sqrt{\tau})\\
+	&+\frac{1}{12} a K \tau^2 \frac{d}{d y} N(y/\sqrt{\tau})
+	-\frac{1}{8} \rho^2 \tau^3 a K \frac{d^3}{d y^3} N(y/\sqrt{\tau})
 	\end{split}
 \end{equation*}
 
