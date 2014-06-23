@@ -430,15 +430,15 @@ Using the explicit formulae for $W^{0}$ and $W^{1}$ and the finance greeks we ca
 \begin{equation*}
 	\begin{split}
 	  W_{a}^{0} &= K\tau \frac{d}{dy} N(y/\sqrt{\tau})\\
-	  W_{aa}^{0} &= K\tau\biggl( \tau - \frac{y}{a}\biggr) \frac{d^2}{d y^2} N(y/\sqrt{\tau})\\
-	  W_{F}^{1} &= -\frac{1}{2}\rho \frac{K}{F} \tau^2 \frac{d^3}{dy^3}N(y/\sqrt{\tau})\\
-	    W_{Fa}^{1} &= -\frac{1}{2}\rho \frac{K}{F} \tau^2 \biggl(\tau-\frac{y}{a}\biggr) \frac{d^4}{dy^4}N(y/\sqrt{\tau})
+	  W_{aa}^{0} &=- K\tau\biggl( \tau + \frac{y}{a}\biggr) \frac{d^2}{d y^2} N(y/\sqrt{\tau})\\
+	  W_{F}^{1} &= \frac{1}{2}\rho \frac{K}{F} \tau^2 \frac{d^3}{dy^3}N(y/\sqrt{\tau})\\
+	    W_{Fa}^{1} &= -\frac{1}{2}\rho \frac{K}{F} \tau^2 \biggl(\tau+\frac{y}{a}\biggr) \frac{d^4}{dy^4}N(y/\sqrt{\tau})
 	\end{split}
 \end{equation*}
 In terms of the variable $y$ we obtain
 \begin{equation*}
 	\begin{split}
-	W^{2}_{t} +\frac{1}{2} W^{2}_{yy} &= -\frac{1}{2}aK\tau ( a\tau - y ) \frac{d^2}{d y^2} N(y/\sqrt{\tau}) +\frac{1}{2}\rho^2 a K \tau^2 (a\tau-y ) \frac{d^4}{dy^4}N(y/\sqrt{\tau})\:.
+	W^{2}_{t} +\frac{1}{2} W^{2}_{yy} &= \frac{1}{2}aK\tau ( a\tau + y ) \frac{d^2}{d y^2} N(y/\sqrt{\tau}) + \frac{1}{2}\rho^2 a K \tau^2 (a\tau+y ) \frac{d^4}{dy^4}N(y/\sqrt{\tau})\:.
 	\end{split}
 \end{equation*}
 Duhamel's principle and equation \eqref{heat_kernel} give
@@ -458,10 +458,8 @@ Duhamel's principle and equation \eqref{heat_kernel} give
 %In other words
 \begin{equation*}
 	\begin{split}
-	W^{2}&=  \frac{1}{6} a K \tau^2 (a\tau - y) \frac{d^2}{d y^2} N(y/\sqrt{\tau})
-	- \frac{1}{8} \rho^2 a K \tau^3 ( a\tau - y )  \frac{d^4}{d y^4} N(y/\sqrt{\tau})\\
-	&+\frac{1}{12} a K \tau^2 \frac{d}{d y} N(y/\sqrt{\tau})
-	-\frac{1}{8} \rho^2 \tau^3 a K \frac{d^3}{d y^3} N(y/\sqrt{\tau})
+	W^{2}&= \frac{1}{12} a K \tau^2 \frac{d}{d y} N(y/\sqrt{\tau}) -\frac{1}{6} a K \tau^2 (a\tau + y) \frac{d^2}{d y^2} N(y/\sqrt{\tau})\\
+	& +\frac{1}{8} \rho^2 \tau^3 a K \frac{d^3}{d y^3} N(y/\sqrt{\tau}) - \frac{1}{8} \rho^2 a K \tau^3 ( a\tau + y )  \frac{d^4}{d y^4} N(y/\sqrt{\tau})
 	\end{split}
 \end{equation*}
 

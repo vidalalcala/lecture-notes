@@ -11,32 +11,43 @@ a = 0.20 ;
 T = 1 ;
 rho = -0.10 ;
 K = 30 ;
+n = 2 ;
 
 
 %functions
 d2 = @(F,alpha,tau,strike) ( log( (1.0/strike)*F ) - 0.5*(alpha^2).*tau )./(alpha*sqrt(tau)) ;
 d1 = @(F,alpha,tau,strike) ( log( (1.0/strike)*F ) + 0.5*(alpha^2).*tau )./(alpha*sqrt(tau)) ;
+y = @(F,alpha,tau,strike) ( log( (1.0/strike)*F ) - 0.5*(alpha^2).*tau )./(alpha);
 
 N = @(x) normcdf(x) ;
 N1 = @(x) normpdf(x) ;
 N2 = @(x) -x.*normpdf(x) ;
 N3 = @(x) (x.^2 - 1.0 ).*normpdf(x) ;
 N4 = @(x) (-x.^3+3*x).*normpdf(x) ;
+N5 = @(x) (x.^4 - 6*x.^2 + 3).*normpdf(x) ;
+N6 = @(x) (-x.^5 + 10*x.^3 - 15*x).*normpdf(x) ;
+
+
 
 W0 = @(F,t) F.*N(d1(F,a,T-t,K)) - K*N(d2(F,a,T-t,K)) 
 W1 = @(F,t) 0.5*rho*K*a*((T-t).*N2(d2(F,a,T-t,K)))
 W2 = @(F,t) -(1/2)*a*K*((1/3)*a*((T-t).^2).*N2(d2(F,a,T-t,K))...
     + (1/3)*((T-t).^(3/2)).*d2(F,a,T-t,K).*N2(d2(F,a,T-t,K))...
     -(1/6)*((T-t).^(3/2)).*N1(d2(F,a,T-t,K)))...
-    -(1/2)*rho*rho*a*K*((1/4)*a*((T-t).^2).*N4(d2(F,a,T-t,K))...
+    +(1/2)*rho*rho*a*K*((1/4)*a*((T-t).^2).*N4(d2(F,a,T-t,K))...
     + (1/4)*((T-t).^(3/2)).*d2(F,a,T-t,K).*N4(d2(F,a,T-t,K))...
     -(1/4)*((T-t).^(3/2)).*N3(d2(F,a,T-t,K)))
+V = @(F,t) ((1/((n+2)*(n+3)))*(T-t) + (1/(n+3))*(y(F,a,T-t,K) + a*(T-t)).^2).*((T-t).^(n+1-2)).*N4(d2(F,a,T-t,K))...
+    -2*3*((1/((n+2)*(n+3)))*(y(F,a,T-t,K) + a*(T-t))).*((T-t).^(n+1-3/2)).*N3(d2(F,a,T-t,K))...
+    +2*3*2*(1/((n+1)*(n+2)*(n+3))).*((T-t).^(n)).*N2(d2(F,a,T-t,K))
+V1 = @(F,t) -(1/(n+1))*((T-t).^(n-1)).*N4(d2(F,a,T-t,K))
+
 %Plot
 F = 20:1:60 ;
 t = 0:0.05:.95 ;
 [Fg, tg] = meshgrid(F,t) ;
-y = W1(Fg,tg) ;
-surf(Fg,tg,y)
+z = W1(Fg,tg) ;
+surf(Fg,tg,z)
 title('W^1')
 
 % Check source term
@@ -44,20 +55,24 @@ h = 0.00001;
 dt = 0.000000001;
 %W3_FF = (1/(h*h))*(W3(Fg+h,tg)-2*W3(Fg,tg)+W3(Fg-h,tg)) ;
 %W3_t = (1.0/dt)*(W3(Fg,tg+dt)-W3(Fg,tg));
+V_FF = (1/(h*h))*(V(Fg+h,tg)-2*V(Fg,tg)+V(Fg-h,tg)) ;
+V_t = (1.0/dt)*(V(Fg,tg+dt)-V(Fg,tg));
 W2_FF = (1/(h*h))*(W2(Fg+h,tg)-2*W2(Fg,tg)+W2(Fg-h,tg)) ;
 W2_t = (1.0/dt)*(W2(Fg,tg+dt)-W2(Fg,tg));
 W1_FF = (1/(h*h))*(W1(Fg+h,tg)-2*W1(Fg,tg)+W1(Fg-h,tg)) ;
 W1_t = (1.0/dt)*(W1(Fg,tg+dt)-W1(Fg,tg));
 W0_FF = (1/(h*h))*(W0(Fg+h,tg)-2*W0(Fg,tg)+W0(Fg-h,tg)) ;
 W0_t = (1.0/dt)*(W0(Fg,tg+dt)-W0(Fg,tg));
-source = -rho*a*K*N2(d2(Fg, a, T-tg, K)); 
+sourceV1 = ((T-tg).^(n-2)).*N4(d2(Fg,a,T-tg,K)) 
+source = ((T-tg).^(n-2)).*((a*(T-tg)+ y(Fg,a,T-tg,K)).^2).*N4(d2(Fg,a,T-tg,K));
+source1 = -rho*a*K*N2(d2(Fg, a, T-tg, K)); 
 source2 = (1/2)*a*K*(a*(T-tg)+sqrt(T-tg).*d2(Fg,a,T-tg,K)).*N2(d2(Fg,a,T-tg,K))...
-    +(1/2)*rho*rho*a*K*(a*(T-tg)+sqrt(T-tg).*d2(Fg,a,T-tg,K)).*N4(d2(Fg,a,T-tg,K))
+    -(1/2)*rho*rho*a*K*(a*(T-tg)+sqrt(T-tg).*d2(Fg,a,T-tg,K)).*N4(d2(Fg,a,T-tg,K));
 %-0.5*a*K*(a*(T-tg)-d2(Fg,a,T-tg,K).*sqrt(T-tg)).*N2(d2(Fg,a,T-tg,K))
  % +0.5*rho*rho*a*K*(a*(T-tg)-d2(Fg,a,T-tg,K).*sqrt(T-tg)).*N4(d2(Fg,a,T-tg,K));
 
 %Check
-BS = W1_t + 0.5*a*a*(Fg.*Fg.*W1_FF) - source;
+BS = V_t + 0.5*a*a*(Fg.*Fg.*V_FF) + source;
 figure
 surf(Fg,tg,BS)
 title('BS1')
